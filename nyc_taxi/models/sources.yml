@@ -1,0 +1,17 @@
+
+
+version 2:
+
+sources:
+  - name: src_data
+    database: NYC_TAXI
+    schema: dbo
+    tables:
+      - name: Rates
+      - name: Vendors
+      - name: payments
+      - name: taxi_trips
+      - name: taxi_zones
+      - name: trip_types
+
+

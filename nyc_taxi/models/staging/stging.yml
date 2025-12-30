@@ -1,0 +1,45 @@
+
+version: 2 
+
+models: 
+    - name: stg_rate
+      description: The final rate code in effect at the end of the trip 
+                   (1= Standard rate; 2= JFK; 3= Newark; 4= Nassau or Westchester; 5= Negotiated fare; 6= Group ride)
+      columns: 
+        - name: rate_id
+          description: primary key
+        - name: rate_code            
+          description: rate name 
+
+    - name: stg_payments
+      description: A numeric code signifying how the passenger paid for the trip 
+                   (1= Credit card; 2= Cash; 3= No charge; 4= Dispute; 5= Unknown; 6= Voided trip)
+      columns: 
+        - name: payment_id
+          description: primary key
+        - name: payment_method            
+          description: payment type   
+
+    - name: stg_taxi_zones
+      description: locations where the passengers ride or delevered
+      columns:
+      - name: LocationID
+        description: primary key
+      - name: Borough
+        description: The New York City borough (or area) where the zone is located. 
+                    Possible values:Manhattan,Brooklyn,Queens,Bronx,Staten Island,EWR (Newark Airport–treated separately),
+                    Unknown (for zones 264 and 265, which are catch-all for invalid/missing locations)
+      - name: Zone
+        description: The common or official name of the neighborhood or area (e.g., "Astoria", "Central Park", 
+                     "JFK Airport", "Upper East Side North").This is the human-readable description of the zone. 
+                     Some zones cover parks, airports, or other special areas.
+      - name: service_zone  
+        description: Categorizes the zone based on taxi service rules and fare types. 
+                      Possible values and their meanings:Yellow Zone – Areas where yellow (street-hail) 
+                      taxis are allowed to pick up passengers on the street. Almost exclusively in Manhattan south of 96th St
+                      on the East Side and 110th St on the West Side, plus the airports.Boro Zone – 
+                      The rest of NYC (outer boroughs and upper Manhattan). Street-hail yellow taxis are generally not allowed
+                      here; green taxis (Boro Taxis) and rideshares operate instead.Airports – JFK Airport (132) 
+                      and LaGuardia Airport (138).EWR – Newark Liberty International Airport (LocationID 1) – special case, 
+                      outside NYC but included for trips to/from it.N/A – Used for the two "Unknown" catch-all zones (264 and 265).           
+      
