@@ -33,6 +33,12 @@ models:
   nyc_taxi:
     # Config indicated by + and applies to all files under models/example/
     staging:
-      +database: NYC_TRYBS_DWH
+      +database: NYC_TAXI_DWH
       +schema: staging
       +materialized: table
+
+    analysis:
+      +database: NYC_TAXI_DWH
+      +schema: analtycal
+      +materialized: table
+

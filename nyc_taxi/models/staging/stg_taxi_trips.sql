@@ -3,10 +3,10 @@
 with src_taxi_trips as 
 (
     select 
-        trip_info_id as trip_info_id,
-        VendorID as venor_id,
-        lpep_pickup_datetime as pickup_time,
-        lpep_dropoff_datetime as dropoff_time,
+        trip_info_id,
+        VendorID as vendor_id,
+        CAST(lpep_pickup_datetime AS DATE) as pickup_time,
+        CAST(lpep_dropoff_datetime AS DATE) as dropoff_time,
         store_and_fwd_flag as trip_store_flag,
         RatecodeID as rate_id,
         PULocationID as pickup_location_id,
