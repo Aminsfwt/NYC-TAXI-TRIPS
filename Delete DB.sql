@@ -1,2 +1,0 @@
-
-create database NYC_TAXI_DWH

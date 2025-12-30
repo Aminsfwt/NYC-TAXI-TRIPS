@@ -1,21 +1,24 @@
 import pandas as pd
 from sqlalchemy import create_engine
 
+# Make MS SQL Server Connection for the source database
 source_engine = create_engine(
-    "mssql+pyodbc://@AMENSFWT\\SQLEXPRESS/NYC_TAXI?"
-    "driver=ODBC+Driver+17+for+SQL+Server&"
-    "Trusted_Connection=yes&"
+    "mssql+pyodbc://@AMENSFWT\\SQLEXPRESS/NYC_TAXI?"  #server name
+    "driver=ODBC+Driver+17+for+SQL+Server&" #used driver
+    "Trusted_Connection=yes&" #using windows authentication
     "TrustServerCertificate=yes"
 )
 
+# Make MS SQL Server Connection for the target database
 target_engine = create_engine(
-    "mssql+pyodbc://@AMENSFWT\\SQLEXPRESS/NYC_TAXI_DWH?"
+    "mssql+pyodbc://@AMENSFWT\\SQLEXPRESS/NYC_TAXI_DWH?"  
     "driver=ODBC+Driver+17+for+SQL+Server&"
     "Trusted_Connection=yes&"
     "TrustServerCertificate=yes",
-    fast_executemany=True   # ← Magic for speed + reliability on SQL Server
+    fast_executemany=True   #uses ODBC's optimized bulk insert (no 2100-parameter limit)
 )
 
+#tables that loaded from db
 tables = ["Rates", "Vendors", "payments", "taxi_zones", "trip_types", "taxi_trips"]
 
 for table in tables:
@@ -28,10 +31,10 @@ for table in tables:
     
     table_name = table.lower()
     
-    # Optional: Drop table first for clean replace
-    # with target_engine.connect() as conn:
-    #     conn.execute(text(f"DROP TABLE IF EXISTS raw_data.{table_name}"))
-    #     conn.commit()
+    #Drop table first for clean replace
+    with target_engine.connect() as conn:
+        conn.execute(text(f"DROP TABLE IF EXISTS raw_data.{table_name}"))
+        conn.commit()
     
     df.to_sql(
         name=table_name,

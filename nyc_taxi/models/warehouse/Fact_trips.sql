@@ -16,7 +16,7 @@ WITH fact_trips AS
         dp.date_key as pickup_time_key,
         dd.date_key as dropoff_time_key,
         trip_store_flag,
-        rate_id,
+        r.rate_key,
         passenger_count,
         trip_distance,
         nontaxed_fare,
@@ -28,20 +28,22 @@ WITH fact_trips AS
         total_amount
     
 FROM {{ref('stg_taxi_trips')}} st
-LEFT JOIN {{('Dim_Vendors')}} v
+LEFT JOIN {{ref('Dim_Vendors')}} v
         ON st.vendor_id = v.VendorID
-LEFT JOIN {{('Dim_Taxi_zones')}} lp
+LEFT JOIN {{ref('Dim_Taxi_zones')}} lp
         ON st.pickup_location_id = lp.LocationID
-LEFT JOIN {{('Dim_Taxi_zones')}} ld
+LEFT JOIN {{ref('Dim_Taxi_zones')}} ld
         ON st.drop_location_id = ld.LocationID
-LEFT JOIN {{('Dim_Payments')}} p
+LEFT JOIN {{ref('Dim_Payments')}} p
         ON st.payment_id = p.payment_id
-LEFT JOIN {{('Dim_Trip_types')}} t
+LEFT JOIN {{ref('Dim_Trip_types')}} t
         ON st.trip_id = t.trip_type_id 
 LEFT JOIN {{ref('Dim_Date')}} dp   
         ON st.pickup_time = dp.full_date  
 LEFT JOIN {{ref('Dim_Date')}} dd   
-        ON st.dropoff_time = dd.full_date                                           
+        ON st.dropoff_time = dd.full_date
+LEFT JOIN {{ref('Dim_Rates')}} r
+        ON st.trip_id = r.rate_id                                                   
 )
 
 select 
