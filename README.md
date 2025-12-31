@@ -122,8 +122,3 @@ These models reference staging models via {{ ref(...) }} and join them together.
 5. Test: `dbt test`
 6. View lineage: `dbt docs generate && dbt docs serve`
 
-#### Run Project
-    dbt deps      # Install packages
-    dbt run       # Build models
-    dbt test      # Run tests
-    dbt docs generate && dbt docs serve  # View documentation locally
