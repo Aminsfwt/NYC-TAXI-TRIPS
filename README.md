@@ -17,7 +17,7 @@ NYC Yellow Taxi Trip dataset from kaggle [dataset](https://www.kaggle.com/datase
 
 
 ## Data Warehouse design process
-- use data to load the database tables from NYC_TAXI DB into a raw_data schema in  NYC_TAXI_DWH in MS SQL Server [Load_db_to_dwh.py](Insert_into_DB_script/load_db_to_dwh.py).
+- use python to load the database tables from NYC_TAXI DB into a raw_data schema in  NYC_TAXI_DWH in MS SQL Server [Load_db_to_dwh.py](Insert_into_DB_script/load_db_to_dwh.py).
 
 - use dbt tool to clean & transform the database to datawarehous and load data into analtycal schema.
 
